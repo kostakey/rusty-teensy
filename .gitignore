@@ -1,0 +1,9 @@
+rust-teensy-blink/target/
+rust-teensy-blink/build.sh
+
+.vscode/
+rust-teensy-blink/Cargo.lock
+
+*.o
+*.d
+*.hex
