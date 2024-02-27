@@ -1,7 +1,7 @@
 [package]
 name = "rust-teensy-blink"
 version = "0.1.0"
-edition = "2021"
+edition = "2021" # actually really important to keep as 2021, or else things won't work
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -9,18 +9,19 @@ edition = "2021"
 cortex-m = "0.7.7"          # https://crates.io/crates/cortex-m/
 embedded-hal = "0.2.7"      # https://crates.io/crates/embedded-hal/
 # Remove me if you don't want logging.
-#log = "0.4"
+log = "0.4"
 teensy4-panic = "0.2.3"
 # default-features = false    # when using a custom panic handler
+# fugit = "0.3.7"             # https://crates.io/crates/fugit
 
 [dependencies.teensy4-bsp]  # https://crates.io/crates/teensy4-bsp/
 version = "0.4.7"
 features = [
     # Use the BSP's runtime. This lets you write your
     # `main()` function.
-    "rt"
+    "rt",
     # Remove me if you don't want logging.
-    #"usb-logging",
+    "usb-logging"
 ]
 
 # Don't optimize build dependencies, like proc macros.
