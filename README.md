@@ -20,6 +20,8 @@ The Teensy 4.1 uses an NXP iMRXT1062 chip with the ARM Cortex-M7 core, so it use
 
 ## Create a cargo package
 
+Cargo is the default package manager for Rust and it is pretty sick.
+
 Create the base directories for an embedded rust project:
 
 `cargo new rusty-teensy-blink`
@@ -118,4 +120,8 @@ To exit the window it brings up, do Ctrl+A, then Shift+Q (just like vim), then E
 
 ## Non-blocking hardware timer
 
-A non-blocking timer is powerful for asynchronous actions. For example, blinking an LED at a different rate than what is being logged over USB. This ensures the CPU is always active while different processes are occuring. It would really suck if you were to lose input data due to the CPU halting because you used a whole system interrupt. Luckily, the Teensy has multiple Peripheral Interrupt Timer (PIT) channels to satisfy this issue. My blinking example uses a PIT for asynchronization across the board *hehe*. Now imagine how this would be useful for protocols such as SPI or CAN :)
+A non-blocking timer is powerful for asynchronous actions. For example, blinking an LED at a different rate than what is being logged over USB. This ensures the CPU is always active while different processes are occuring. It would really suck if you were to lose input data due to the CPU halting because you used a whole system interrupt. Luckily, the Teensy has multiple Peripheral Interrupt Timer (PIT) channels to satisfy this issue. My first blinking iteration used a PIT for asynchronization across the board *hehe*. 
+
+This is good and all, but there are only 4 of these PITs on the Teensy board. Hmm, not so good now. This really sucks since there may be cases where a project requires tens, if not hundreds of concurrent but unique timing occurances. So, we can do the exact same interrupting action but using only one timer. In this case, I use 1 of the 2 General Purpose Timers (GPTs) on the Teensy. All you need to do is begin a timer instance and chunk up the counter as much as you need. In other words, set a previous time, compare it to the current time, and trigger something once a threshold is met. Pretty simple.
+
+Now imagine how this would be useful for protocols such as SPI or CAN :)
